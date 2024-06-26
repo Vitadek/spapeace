@@ -1,0 +1,196 @@
+{
+  "stig": [
+    {
+      "rule": [
+        {
+          "groupid": "G0001",
+          "status": "not_a_finding",
+          "fix_text": "Install the required patch.",
+          "check_text": "Ensure the patch is installed."
+        },
+        {
+          "groupid": "G0002",
+          "status": "open",
+          "fix_text": "No action necessary.",
+          "check_text": "No check needed."
+        },
+        {
+          "groupid": "G0003",
+          "status": "open",
+          "fix_text": "N/A for this system.",
+          "check_text": "No applicable checks."
+        },
+        {
+          "groupid": "G0004",
+          "status": "open",
+          "fix_text": "Review the configuration.",
+          "check_text": "Check the configuration according to guidelines."
+        },
+        {
+          "groupid": "G0005",
+          "status": "open",
+          "fix_text": "Apply configuration changes.",
+          "check_text": "Ensure the configuration matches the guidelines."
+        },
+        {
+          "groupid": "G0006",
+          "status": "open",
+          "fix_text": "No issues found.",
+          "check_text": "No checks required."
+        },
+        {
+          "groupid": "G0007",
+          "status": "open",
+          "fix_text": "Does not apply to this system.",
+          "check_text": "No checks applicable."
+        },
+        {
+          "groupid": "G0008",
+          "status": "open",
+          "fix_text": "Upgrade software to latest version.",
+          "check_text": "Check the installed software version."
+        },
+        {
+          "groupid": "G0009",
+          "status": "open",
+          "fix_text": "Conduct a detailed review.",
+          "check_text": "Follow the detailed review procedure."
+        },
+        {
+          "groupid": "G0010",
+          "status": "open",
+          "fix_text": "Implement security controls.",
+          "check_text": "Verify security control implementations."
+        }
+      ]
+    },
+    {
+      "rule": [
+        {
+          "groupid": "G0011",
+          "status": "open",
+          "fix_text": "Apply the recommended fix.",
+          "check_text": "Ensure the recommended fix is applied."
+        },
+        {
+          "groupid": "G0012",
+          "status": "not_a_finding",
+          "fix_text": "No issues to address.",
+          "check_text": "Double-check the system status."
+        },
+        {
+          "groupid": "G0013",
+          "status": "not_applicable",
+          "fix_text": "Irrelevant for this context.",
+          "check_text": "Check is not needed."
+        },
+        {
+          "groupid": "G0014",
+          "status": "not_reviewed",
+          "fix_text": "Conduct further review.",
+          "check_text": "Review hasn't been completed yet."
+        },
+        {
+          "groupid": "G0015",
+          "status": "open",
+          "fix_text": "Perform the required maintenance.",
+          "check_text": "Verify maintenance actions."
+        },
+        {
+          "groupid": "G0016",
+          "status": "not_a_finding",
+          "fix_text": "System is compliant.",
+          "check_text": "Compliance needs no review."
+        },
+        {
+          "groupid": "G0017",
+          "status": "not_applicable",
+          "fix_text": "Not relevant for current operations.",
+          "check_text": "No operational checks needed."
+        },
+        {
+          "groupid": "G0018",
+          "status": "open",
+          "fix_text": "Update the system's firewall settings.",
+          "check_text": "Check firewall configuration."
+        },
+        {
+          "groupid": "G0019",
+          "status": "open",
+          "fix_text": "Schedule a comprehensive review.",
+          "check_text": "Pending review schedule."
+        },
+        {
+          "groupid": "G0020",
+          "status": "open",
+          "fix_text": "Perform hardware diagnostics.",
+          "check_text": "Verify hardware status."
+        }
+      ]
+    },
+    {
+      "rule": [
+        {
+          "groupid": "G0021",
+          "status": "open",
+          "fix_text": "Address software vulnerabilities.",
+          "check_text": "Identify and fix vulnerabilities."
+        },
+        {
+          "groupid": "G0022",
+          "status": "not_a_finding",
+          "fix_text": "System is up-to-date.",
+          "check_text": "No further action required."
+        },
+        {
+          "groupid": "G0023",
+          "status": "not_applicable",
+          "fix_text": "Not relevant for this system.",
+          "check_text": "Check exemption reason."
+        },
+        {
+          "groupid": "G0024",
+          "status": "not_reviewed",
+          "fix_text": "Review logs regularly.",
+          "check_text": "Logs review not completed."
+        },
+        {
+          "groupid": "G0025",
+          "status": "not_a_finding",
+          "fix_text": "Implement encryption standards.",
+          "check_text": "Check encryption settings."
+        },
+        {
+          "groupid": "G0026",
+          "status": "not_a_finding",
+          "fix_text": "Compliant with standards.",
+          "check_text": "All standards met."
+        },
+        {
+          "groupid": "G0027",
+          "status": "not_applicable",
+          "fix_text": "Does not concern this infrastructure.",
+          "check_text": "No applicable checks."
+        },
+        {
+          "groupid": "G0028",
+          "status": "open",
+          "fix_text": "Verify system backups.",
+          "check_text": "Ensure backups are up-to-date."
+        },
+        {
+          "groupid": "G0029",
+          "status": "not_reviewed",
+          "fix_text": "Preparation for review.",
+          "check_text": "Pending review preparation."
+        },
+        {
+          "groupid": "G0030",
+          "status": "open",
+          "fix_text": "Enhance user access controls.",
+          "check_text": "Check roles and permissions."
+        }
+      ]
+    }
+  ]
+}

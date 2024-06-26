@@ -1,0 +1,20 @@
+{
+  "stig": [
+    {
+      "rule": [
+        {
+          "groupid": "G1",
+          "status": "Active",
+          "fix_text": "Apply patch X",
+          "check_text": "Check for patch X"
+        },
+        {
+          "groupid": "G2",
+          "status": "Inactive",
+          "fix_text": "Apply patch Y",
+          "check_text": "Check for patch Y"
+        }
+      ]
+    }
+  ]
+}
