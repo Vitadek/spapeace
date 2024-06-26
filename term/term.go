@@ -53,6 +53,14 @@ func GetKey() string {
 		return "r"
 	case 'x', 'X':
 		return "x"
+	case 's', 'S':
+		return "s"
+	case 'h', 'H':
+		return "h"
+	case 'l', 'L':
+		return "l"
+	case '/':
+		return "/"
 	case 27: // Escape character
 		return "esc"
 	default:

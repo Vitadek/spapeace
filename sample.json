@@ -10,31 +10,31 @@
         },
         {
           "groupid": "G0002",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "No action necessary.",
           "check_text": "No check needed."
         },
         {
           "groupid": "G0003",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "N/A for this system.",
           "check_text": "No applicable checks."
         },
         {
           "groupid": "G0004",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "Review the configuration.",
           "check_text": "Check the configuration according to guidelines."
         },
         {
           "groupid": "G0005",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "Apply configuration changes.",
           "check_text": "Ensure the configuration matches the guidelines."
         },
         {
           "groupid": "G0006",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "No issues found.",
           "check_text": "No checks required."
         },
@@ -46,7 +46,7 @@
         },
         {
           "groupid": "G0008",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "Upgrade software to latest version.",
           "check_text": "Check the installed software version."
         },
@@ -58,7 +58,7 @@
         },
         {
           "groupid": "G0010",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "Implement security controls.",
           "check_text": "Verify security control implementations."
         }
@@ -68,7 +68,7 @@
       "rule": [
         {
           "groupid": "G0011",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "Apply the recommended fix.",
           "check_text": "Ensure the recommended fix is applied."
         },
@@ -92,7 +92,7 @@
         },
         {
           "groupid": "G0015",
-          "status": "open",
+          "status": "not_reviewed",
           "fix_text": "Perform the required maintenance.",
           "check_text": "Verify maintenance actions."
         },

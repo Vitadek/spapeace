@@ -4,12 +4,15 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
+	"strings"
 	"spock/jsonparser"
 	"spock/term"
 )
 
 var jsonFilePath string
 var jsonData *jsonparser.JSONData
+var searchQuery string
 
 func ParseJSON() error {
 	for {
@@ -39,20 +42,39 @@ func SaveJSON() error {
 	return jsonparser.SaveJSONFile(jsonFilePath, jsonData)
 }
 
-// I don't think this function is working as intended. Look more into it. Menu isn't updating after function is called.
 func updateGroupStatus(group *jsonparser.Rule, newStatus string) {
 	group.Status = newStatus
 }
 
 func displayGroupsWithStatus(data *jsonparser.JSONData) {
-	selected := 0
+	var selected int
+	sorting := false
+	filterStatus := ""
 
 	for {
-		// Extract groups again to include possible modifications
-		groups := extractGroups(data)
+		groups := filterGroups(data, filterStatus)
+
+		// Apply sorting
+		if sorting {
+			sort.Slice(groups, func(i, j int) bool {
+				return strings.Compare(groups[i].GroupID, groups[j].GroupID) < 0
+			})
+		}
+
+		// Apply search
+		if searchQuery != "" {
+			groups = searchGroups(groups, searchQuery)
+		}
 
 		// Clear screen and move cursor to top-left
 		fmt.Print("\033[2J\033[H")
+
+		// Display the active filter at the top and the search query if any
+		fmt.Printf("Active Filter: %s\n", getDisplayFilter(filterStatus))
+		if searchQuery != "" {
+			fmt.Printf("Search Query: %s\n", searchQuery)
+		}
+		fmt.Println()
 
 		// Display group options with status
 		fmt.Println("Groups:")
@@ -68,11 +90,15 @@ func displayGroupsWithStatus(data *jsonparser.JSONData) {
 		fmt.Println("\nKeys:")
 		fmt.Println("j: Move down")
 		fmt.Println("k: Move up")
+		fmt.Println("h: Move left (previous filter)")
+		fmt.Println("l: Move right (next filter)")
 		fmt.Println("e: Select option")
 		fmt.Println("n: Change status to not_a_finding")
 		fmt.Println("x: Change status to not_applicable")
 		fmt.Println("r: Change status to not_reviewed")
 		fmt.Println("o: Change status to open")
+		fmt.Println("s: Toggle sorting by GroupID")
+		fmt.Println("/: Search")
 		fmt.Println("Esc: Back to main menu")
 
 		// Move the cursor to the bottom of the screen
@@ -86,24 +112,83 @@ func displayGroupsWithStatus(data *jsonparser.JSONData) {
 			selected = (selected - 1 + len(groups)) % len(groups)
 		case "j":
 			selected = (selected + 1) % len(groups)
+		case "h":
+			filterStatus = prevFilterStatus(filterStatus)
+		case "l":
+			filterStatus = nextFilterStatus(filterStatus)
 		case "e":
-			runGroupSubmenu(groups[selected])
+			if selected < len(groups) {
+				runGroupSubmenu(groups[selected])
+			}
 		case "n":
-			updateGroupStatus(groups[selected], "not_a_finding")
-			SaveJSON()
+			if selected < len(groups) {
+				updateGroupStatus(groups[selected], "not_a_finding")
+				SaveJSON()
+			}
 		case "x":
-			updateGroupStatus(groups[selected], "not_applicable")
-			SaveJSON()
+			if selected < len(groups) {
+				updateGroupStatus(groups[selected], "not_applicable")
+				SaveJSON()
+			}
 		case "r":
-			updateGroupStatus(groups[selected], "not_reviewed")
-			SaveJSON()
+			if selected < len(groups) {
+				updateGroupStatus(groups[selected], "not_reviewed")
+				SaveJSON()
+			}
 		case "o":
-			updateGroupStatus(groups[selected], "open")
-			SaveJSON()
+			if selected < len(groups) {
+				updateGroupStatus(groups[selected], "open")
+				SaveJSON()
+			}
+		case "s":
+			sorting = !sorting
+		case "/":
+			term.DisableRawMode()
+			fmt.Print("Enter search query: ")
+			reader := bufio.NewReader(os.Stdin)
+			searchQuery, _ = reader.ReadString('\n')
+			searchQuery = strings.TrimSpace(searchQuery)
+			term.EnableRawMode()
 		case "esc":
 			return
 		}
 	}
+}
+
+func nextFilterStatus(current string) string {
+	statuses := []string{"", "not_reviewed", "not_a_finding", "open", "not_applicable"}
+	for i, status := range statuses {
+		if status == current {
+			return statuses[(i+1)%len(statuses)]
+		}
+	}
+	return statuses[1]
+}
+
+func prevFilterStatus(current string) string {
+	statuses := []string{"", "not_reviewed", "not_a_finding", "open", "not_applicable"}
+	for i, status := range statuses {
+		if status == current {
+			return statuses[(i-1+len(statuses))%len(statuses)]
+		}
+	}
+	return statuses[len(statuses)-1]
+}
+
+func getDisplayFilter(filter string) string {
+	switch filter {
+	case "":
+		return "None"
+	case "not_reviewed":
+		return "Not Reviewed"
+	case "not_a_finding":
+		return "Not A Finding"
+	case "not_applicable":
+		return "Not Applicable"
+	case "open":
+		return "Open"
+	}
+	return filter
 }
 
 func runGroupSubmenu(group *jsonparser.Rule) {
@@ -173,7 +258,7 @@ func editGroupDetail(option string, group *jsonparser.Rule) {
 
 	fmt.Printf("Enter new %s: ", option)
 	input, _ := reader.ReadString('\n')
-	input = input[:len(input)-1] // Remove the newline character
+	input = strings.TrimSpace(input) // Remove surrounding whitespace, including newline character
 
 	switch option {
 	case "Status":
@@ -195,4 +280,30 @@ func extractGroups(data *jsonparser.JSONData) []*jsonparser.Rule {
 		}
 	}
 	return groups
+}
+
+func filterGroups(data *jsonparser.JSONData, filterStatus string) []*jsonparser.Rule {
+	groups := extractGroups(data)
+
+	// Apply filtering
+	if filterStatus != "" {
+		var filteredGroups []*jsonparser.Rule
+		for _, group := range groups {
+			if group.Status == filterStatus {
+				filteredGroups = append(filteredGroups, group)
+			}
+		}
+		return filteredGroups
+	}
+	return groups
+}
+
+func searchGroups(groups []*jsonparser.Rule, query string) []*jsonparser.Rule {
+	var result []*jsonparser.Rule
+	for _, group := range groups {
+		if strings.Contains(group.GroupID, query) {
+			result = append(result, group)
+		}
+	}
+	return result
 }
